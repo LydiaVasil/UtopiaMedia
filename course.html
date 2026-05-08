@@ -22,8 +22,8 @@
 .video-info{padding:1rem 1.2rem 1.4rem}
 .video-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:400;color:var(--ink-mid);line-height:1.4;margin-bottom:0.4rem}
 .video-date{font-size:0.82rem;color:var(--ink-soft);font-style:italic}
-.video-loading{text-align:center;padding:3rem;color:var(--ink-soft);font-style:italic;font-size:1.05rem}
-.video-error{text-align:center;padding:2rem;color:var(--ink-soft);font-size:0.95rem}
+.video-loading{text-align:center;padding:3rem;color:var(--ink-soft);font-style:italic;font-size:1.05rem;grid-column:1/-1}
+.video-error{text-align:center;padding:2rem;color:var(--ink-soft);font-size:0.95rem;grid-column:1/-1}
 .video-error a{color:var(--gold-dark);text-decoration:none}
 .video-error a:hover{text-decoration:underline}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,8,6,0.92);z-index:1000;align-items:center;justify-content:center;padding:2rem}
@@ -34,10 +34,7 @@
 .modal-video{aspect-ratio:16/9;width:100%;background:#000}
 .modal-video iframe{width:100%;height:100%;border:none;display:block}
 .modal-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold-light);margin-top:1rem;font-weight:400;line-height:1.4}
-@media(max-width:900px){
-  .videos-inner{padding:0 1.5rem}
-  .video-grid{grid-template-columns:1fr}
-}
+@media(max-width:900px){.videos-inner{padding:0 1.5rem}.video-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -82,7 +79,7 @@
     <div class="section-label">Latest from the channel</div>
     <h2 class="section-title">All <em>Lessons</em></h2>
     <div class="video-grid" id="video-grid">
-      <div class="video-loading" style="grid-column:1/-1">Loading videos…</div>
+      <div class="video-loading">Loading videos…</div>
     </div>
     <div style="margin-top:2.5rem;text-align:center">
       <a class="btn-outline" href="https://www.youtube.com/channel/UCU0HSw0Vh1EhM1_XMR0sj8A" target="_blank" rel="noopener"
@@ -93,7 +90,6 @@
   </div>
 </div>
 
-<!-- Video Modal -->
 <div class="modal-overlay" id="modal" role="dialog" aria-modal="true">
   <div class="modal-inner">
     <button class="modal-close" id="modal-close" aria-label="Close video">✕</button>
@@ -128,82 +124,104 @@
   var modalClose = document.getElementById('modal-close');
 
   var rssUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL_ID;
-  var proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(rssUrl);
 
-  fetch(proxyUrl)
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      var parser = new DOMParser();
-      var xml = parser.parseFromString(data.contents, 'text/xml');
-      var entries = xml.querySelectorAll('entry');
+  // Try multiple proxies in order until one works
+  var proxies = [
+    'https://corsproxy.io/?' + encodeURIComponent(rssUrl),
+    'https://api.allorigins.win/get?url=' + encodeURIComponent(rssUrl),
+    'https://cors-anywhere.herokuapp.com/' + rssUrl
+  ];
 
-      if(!entries.length){ showError(); return; }
+  function tryProxy(index) {
+    if (index >= proxies.length) { showError(); return; }
+    var url = proxies[index];
+    fetch(url)
+      .then(function(r) { return r.text(); })
+      .then(function(text) {
+        // allorigins wraps in JSON
+        var xmlText = text;
+        try {
+          var json = JSON.parse(text);
+          if (json.contents) xmlText = json.contents;
+        } catch(e) {}
 
-      grid.innerHTML = '';
-      entries.forEach(function(entry){
-        var videoId = '';
-        var vidIdEl = entry.getElementsByTagNameNS('http://www.youtube.com/xml/schemas/2015','videoId')[0];
-        if(vidIdEl){ videoId = vidIdEl.textContent; }
-        else {
-          var link = entry.querySelector('link');
-          if(link){ videoId = (link.getAttribute('href')||'').replace('https://www.youtube.com/watch?v=',''); }
-        }
-        if(!videoId) return;
+        var parser = new DOMParser();
+        var xml = parser.parseFromString(xmlText, 'text/xml');
+        var entries = xml.querySelectorAll('entry');
+        if (!entries.length) { tryProxy(index + 1); return; }
+        renderVideos(entries);
+      })
+      .catch(function() { tryProxy(index + 1); });
+  }
 
-        var title = entry.querySelector('title') ? entry.querySelector('title').textContent : 'Untitled';
-        var published = entry.querySelector('published') ? entry.querySelector('published').textContent : '';
-        var thumb = 'https://img.youtube.com/vi/' + videoId + '/mqdefault.jpg';
-        var dateStr = published ? new Date(published).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : '';
+  function renderVideos(entries) {
+    grid.innerHTML = '';
+    entries.forEach(function(entry) {
+      var videoId = '';
+      var allEls = entry.getElementsByTagName('*');
+      for (var i = 0; i < allEls.length; i++) {
+        if (allEls[i].localName === 'videoId') { videoId = allEls[i].textContent; break; }
+      }
+      if (!videoId) {
+        var link = entry.querySelector('link');
+        if (link) videoId = (link.getAttribute('href') || '').split('v=')[1] || '';
+      }
+      if (!videoId) return;
 
-        var card = document.createElement('div');
-        card.className = 'video-card';
-        card.setAttribute('role','button');
-        card.setAttribute('tabindex','0');
-        card.innerHTML =
-          '<div class="video-thumb">' +
-            '<img src="' + thumb + '" alt="' + esc(title) + '" loading="lazy">' +
-            '<div class="video-play"><div class="video-play-btn">&#9654;</div></div>' +
-          '</div>' +
-          '<div class="video-info">' +
-            '<div class="video-title">' + esc(title) + '</div>' +
-            (dateStr ? '<div class="video-date">' + dateStr + '</div>' : '') +
-          '</div>';
+      var title = entry.querySelector('title') ? entry.querySelector('title').textContent : 'Untitled';
+      var published = entry.querySelector('published') ? entry.querySelector('published').textContent : '';
+      var thumb = 'https://img.youtube.com/vi/' + videoId + '/mqdefault.jpg';
+      var dateStr = published ? new Date(published).toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'}) : '';
 
-        function openVideo(){
-          modalIframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1';
-          modalTitle.textContent = title;
-          modal.classList.add('open');
-          document.body.style.overflow = 'hidden';
-        }
+      var card = document.createElement('div');
+      card.className = 'video-card';
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.innerHTML =
+        '<div class="video-thumb">' +
+          '<img src="' + thumb + '" alt="' + esc(title) + '" loading="lazy">' +
+          '<div class="video-play"><div class="video-play-btn">&#9654;</div></div>' +
+        '</div>' +
+        '<div class="video-info">' +
+          '<div class="video-title">' + esc(title) + '</div>' +
+          (dateStr ? '<div class="video-date">' + dateStr + '</div>' : '') +
+        '</div>';
 
-        card.addEventListener('click', openVideo);
-        card.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' ') openVideo(); });
-        grid.appendChild(card);
-      });
-    })
-    .catch(function(){ showError(); });
+      function openVideo() {
+        modalIframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1';
+        modalTitle.textContent = title;
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      card.addEventListener('click', openVideo);
+      card.addEventListener('keydown', function(e) { if (e.key==='Enter'||e.key===' ') openVideo(); });
+      grid.appendChild(card);
+    });
+  }
 
-  function showError(){
+  function showError() {
     grid.innerHTML =
-      '<div class="video-error" style="grid-column:1/-1">' +
-        '<p>Could not load videos automatically.</p>' +
-        '<p style="margin-top:0.5rem"><a href="https://www.youtube.com/channel/UCU0HSw0Vh1EhM1_XMR0sj8A" target="_blank">Watch directly on YouTube →</a></p>' +
+      '<div class="video-error">' +
+        '<p>Videos could not load automatically right now.</p>' +
+        '<p style="margin-top:0.8rem"><a href="https://www.youtube.com/channel/UCU0HSw0Vh1EhM1_XMR0sj8A" target="_blank" rel="noopener">Watch all lessons on YouTube →</a></p>' +
       '</div>';
   }
 
-  function esc(s){
+  function esc(s) {
     return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
   modalClose.addEventListener('click', closeModal);
-  modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+  modal.addEventListener('click', function(e) { if (e.target===modal) closeModal(); });
+  document.addEventListener('keydown', function(e) { if (e.key==='Escape') closeModal(); });
 
-  function closeModal(){
+  function closeModal() {
     modal.classList.remove('open');
     modalIframe.src = '';
     document.body.style.overflow = '';
   }
+
+  tryProxy(0);
 })();
 </script>
 </body>
