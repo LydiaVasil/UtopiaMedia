@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --gold:#C9A84C;
+  --gold-light:#E8D5A0;
+  --gold-dark:#8A6E2F;
+  --ink:#1A1612;
+  --ink-mid:#3D3328;
+  --ink-soft:#6B5E4E;
+  --parchment:#FAF6EE;
+  --parchment-dark:#F0E9D8;
+  --parchment-border:#DDD0B8;
+  --white:#FFFEF9;
+}
+
+body{
+  background:var(--parchment);
+  font-family:'Crimson Pro',Georgia,serif;
+  font-weight:300;
+  color:var(--ink);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* NAV */
+nav{
+  background:var(--ink);
+  padding:0 3rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:100;
+  border-bottom:1px solid var(--gold-dark);
+}
+
+.nav-brand{
+  font-family:'Playfair Display',serif;
+  font-size:1rem;
+  color:var(--gold-light);
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  padding:1.1rem 0;
+  font-weight:400;
+  cursor:pointer;
+}
+
+.nav-links{
+  display:flex;
+  gap:0;
+  list-style:none;
+}
+
+.nav-links li a{
+  display:block;
+  padding:1.1rem 1.2rem;
+  font-family:'Crimson Pro',serif;
+  font-size:0.9rem;
+  letter-spacing:0.08em;
+  color:var(--parchment-border);
+  text-decoration:none;
+  text-transform:uppercase;
+  transition:color 0.2s,background 0.2s;
+}
+
+.nav-links li a:hover{
+  color:var(--gold-light);
+  background:rgba(201,168,76,0.08);
+}
+
+.nav-links li a.active{
+  color:var(--gold);
+  border-bottom:2px solid var(--gold);
+}
+
+/* HERO */
+.hero{
+  min-height:82vh;
+  display:flex;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+  background:var(--ink);
+}
+
+.hero-bg-pattern{
+  position:absolute;
+  inset:0;
+  opacity:0.04;
+  background-image:
+    repeating-linear-gradient(45deg,var(--gold) 0,var(--gold) 1px,transparent 0,transparent 50%),
+    repeating-linear-gradient(-45deg,var(--gold) 0,var(--gold) 1px,transparent 0,transparent 50%);
+  background-size:40px 40px;
+}
+
+.hero-ornament{
+  position:absolute;
+  top:50%;
+  right:8%;
+  transform:translateY(-50%);
+  width:340px;
+  height:340px;
+  border:1px solid rgba(201,168,76,0.15);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero-ornament::before{
+  content:'';
+  position:absolute;
+  width:280px;
+  height:280px;
+  border:1px solid rgba(201,168,76,0.1);
+  border-radius:50%;
+}
+
+.hero-ornament::after{
+  content:'✦';
+  font-size:5rem;
+  color:rgba(201,168,76,0.18);
+  line-height:1;
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:660px;
+  padding:5rem 3rem 5rem 4rem;
+}
+
+.hero-eyebrow{
+  font-family:'Crimson Pro',serif;
+  font-size:0.8rem;
+  letter-spacing:0.3em;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:1.4rem;
+  display:flex;
+  align-items:center;
+  gap:1rem;
+}
+
+.hero-eyebrow::before{
+  content:'';
+  display:inline-block;
+  width:40px;
+  height:1px;
+  background:var(--gold);
+}
+
+.hero-amharic{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:1.4rem;
+  color:var(--gold-light);
+  margin-bottom:0.6rem;
+  opacity:0.7;
+  line-height:1.4;
+}
+
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:3.4rem;
+  font-weight:400;
+  color:var(--white);
+  line-height:1.15;
+  margin-bottom:1.6rem;
+  letter-spacing:-0.01em;
+}
+
+.hero-title em{
+  font-style:italic;
+  color:var(--gold-light);
+}
+
+.hero-desc{
+  font-size:1.15rem;
+  color:rgba(250,246,238,0.65);
+  line-height:1.8;
+  margin-bottom:2.4rem;
+  max-width:500px;
+  font-weight:300;
+}
+
+.hero-author{
+  font-size:0.9rem;
+  color:var(--gold);
+  letter-spacing:0.1em;
+  margin-bottom:2.6rem;
+  font-style:italic;
+}
+
+.hero-ctas{
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+
+.btn-primary{
+  background:var(--gold);
+  color:var(--ink);
+  border:none;
+  padding:0.85rem 2.2rem;
+  font-family:'Crimson Pro',serif;
+  font-size:0.95rem;
+  font-weight:500;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:background 0.2s,transform 0.15s;
+  text-decoration:none;
+  display:inline-block;
+}
+
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-1px)}
+
+.btn-outline{
+  background:transparent;
+  color:var(--parchment-border);
+  border:1px solid rgba(201,168,76,0.35);
+  padding:0.85rem 2.2rem;
+  font-family:'Crimson Pro',serif;
+  font-size:0.95rem;
+  font-weight:400;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:border-color 0.2s,color 0.2s,transform 0.15s;
+  text-decoration:none;
+  display:inline-block;
+}
+
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-1px)}
+
+/* DIVIDER */
+.gold-divider{
+  height:3px;
+  background:linear-gradient(90deg,transparent,var(--gold),var(--gold-light),var(--gold),transparent);
+}
+
+/* SECTION BASE */
+.section{
+  padding:5rem 4rem;
+  max-width:1100px;
+  margin:0 auto;
+}
+
+.section-label{
+  font-size:0.75rem;
+  letter-spacing:0.35em;
+  text-transform:uppercase;
+  color:var(--gold-dark);
+  margin-bottom:0.9rem;
+  display:flex;
+  align-items:center;
+  gap:1rem;
+}
+
+.section-label::before{content:'⬥'; font-size:0.6rem}
+
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:2.2rem;
+  font-weight:400;
+  color:var(--ink);
+  line-height:1.2;
+  margin-bottom:1rem;
+}
+
+.section-title em{font-style:italic;color:var(--gold-dark)}
+
+/* WHAT YOU'LL LEARN */
+.learn-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1.5px;
+  margin-top:3rem;
+  background:var(--parchment-border);
+  border:1.5px solid var(--parchment-border);
+}
+
+.learn-card{
+  background:var(--white);
+  padding:2rem 2.2rem;
+  transition:background 0.2s;
+}
+
+.learn-card:hover{background:var(--parchment)}
+
+.learn-num{
+  font-family:'Playfair Display',serif;
+  font-size:3rem;
+  font-weight:400;
+  color:var(--parchment-dark);
+  line-height:1;
+  margin-bottom:1rem;
+}
+
+.learn-card h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.15rem;
+  font-weight:400;
+  color:var(--ink-mid);
+  margin-bottom:0.6rem;
+  line-height:1.3;
+}
+
+.learn-card p{
+  font-size:1rem;
+  color:var(--ink-soft);
+  line-height:1.7;
+}
+
+/* LESSONS */
+.lessons-bg{
+  background:var(--ink);
+  padding:5rem 0;
+}
+
+.lessons-inner{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 4rem;
+}
+
+.lessons-inner .section-label{color:var(--gold)}
+.lessons-inner .section-title{color:var(--white)}
+
+.lessons-list{
+  margin-top:3rem;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  border:1px solid rgba(201,168,76,0.2);
+}
+
+.lesson-row{
+  display:flex;
+  align-items:center;
+  gap:2rem;
+  padding:1.5rem 2rem;
+  border-bottom:1px solid rgba(201,168,76,0.12);
+  cursor:pointer;
+  transition:background 0.2s;
+  text-decoration:none;
+  color:inherit;
+}
+
+.lesson-row:last-child{border-bottom:none}
+
+.lesson-row:hover{background:rgba(201,168,76,0.07)}
+
+.lesson-num{
+  font-family:'Playfair Display',serif;
+  font-size:1.6rem;
+  font-weight:400;
+  color:var(--gold);
+  min-width:2.5rem;
+  opacity:0.7;
+}
+
+.lesson-info{flex:1}
+
+.lesson-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.05rem;
+  color:var(--parchment-border);
+  font-weight:400;
+  margin-bottom:0.2rem;
+}
+
+.lesson-sub{
+  font-size:0.88rem;
+  color:rgba(240,233,216,0.4);
+  letter-spacing:0.05em;
+}
+
+.lesson-arrow{
+  color:var(--gold);
+  opacity:0.5;
+  font-size:1.2rem;
+  transition:opacity 0.2s,transform 0.2s;
+}
+
+.lesson-row:hover .lesson-arrow{opacity:1;transform:translateX(4px)}
+
+.lesson-badge{
+  font-size:0.72rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  padding:0.3rem 0.8rem;
+  color:var(--gold);
+  border:1px solid rgba(201,168,76,0.3);
+}
+
+/* FORMAT */
+.format-section{
+  background:var(--parchment-dark);
+  padding:5rem 0;
+  border-top:1px solid var(--parchment-border);
+  border-bottom:1px solid var(--parchment-border);
+}
+
+.format-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0;
+  margin-top:3rem;
+  border:1px solid var(--parchment-border);
+  background:var(--parchment-border);
+}
+
+.format-card{
+  background:var(--white);
+  padding:2.4rem 2rem;
+  text-align:center;
+}
+
+.format-icon{
+  font-size:1.8rem;
+  color:var(--gold-dark);
+  margin-bottom:1.2rem;
+}
+
+.format-card h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;
+  font-weight:400;
+  color:var(--ink-mid);
+  margin-bottom:0.7rem;
+}
+
+.format-card p{
+  font-size:0.95rem;
+  color:var(--ink-soft);
+  line-height:1.7;
+}
+
+/* REGISTER */
+.register-section{
+  background:var(--gold);
+  padding:5rem 4rem;
+  text-align:center;
+}
+
+.register-section h2{
+  font-family:'Playfair Display',serif;
+  font-size:2.4rem;
+  font-weight:400;
+  color:var(--ink);
+  margin-bottom:0.8rem;
+}
+
+.register-section p{
+  font-size:1.1rem;
+  color:var(--ink-mid);
+  margin-bottom:2.5rem;
+  max-width:480px;
+  margin-left:auto;
+  margin-right:auto;
+  line-height:1.7;
+}
+
+.btn-dark{
+  background:var(--ink);
+  color:var(--gold-light);
+  border:none;
+  padding:0.95rem 2.8rem;
+  font-family:'Crimson Pro',serif;
+  font-size:1rem;
+  font-weight:500;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:background 0.2s,transform 0.15s;
+  text-decoration:none;
+  display:inline-block;
+}
+
+.btn-dark:hover{background:var(--ink-mid);transform:translateY(-1px)}
+
+/* FOOTER */
+footer{
+  background:var(--ink);
+  padding:3rem 4rem;
+  text-align:center;
+  border-top:1px solid var(--gold-dark);
+}
+
+footer p{
+  font-size:0.85rem;
+  color:rgba(240,233,216,0.35);
+  letter-spacing:0.06em;
+  line-height:1.8;
+}
+
+footer .footer-brand{
+  font-family:'Playfair Display',serif;
+  font-size:1rem;
+  color:var(--gold);
+  margin-bottom:0.8rem;
+  letter-spacing:0.12em;
+}
+
+/* PAGE TABS (single page app) */
+.page{display:none}
+.page.active{display:block}
+
+/* ABOUT */
+.about-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5rem;
+  align-items:start;
+}
+
+.about-portrait{
+  background:var(--parchment-dark);
+  border:1px solid var(--parchment-border);
+  aspect-ratio:3/4;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:1rem;
+}
+
+.portrait-initials{
+  font-family:'Playfair Display',serif;
+  font-size:4rem;
+  color:var(--gold-dark);
+  opacity:0.4;
+}
+
+.portrait-caption{
+  font-size:0.85rem;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+
+.about-body h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.4rem;
+  font-weight:400;
+  color:var(--ink);
+  margin:2rem 0 0.8rem;
+}
+
+.about-body h3:first-child{margin-top:0}
+
+.about-body p{
+  font-size:1.05rem;
+  color:var(--ink-soft);
+  line-height:1.8;
+  margin-bottom:1rem;
+}
+
+.pub-list{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+}
+
+.pub-list li{
+  padding:1.2rem;
+  border-left:3px solid var(--gold);
+  background:var(--parchment-dark);
+}
+
+.pub-title{
+  font-family:'Playfair Display',serif;
+  font-size:1rem;
+  color:var(--ink-mid);
+  margin-bottom:0.3rem;
+}
+
+.pub-meta{
+  font-size:0.88rem;
+  color:var(--ink-soft);
+  font-style:italic;
+}
+
+/* BOOKS PAGE */
+.books-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2rem;
+  margin-top:3rem;
+}
+
+.book-card{
+  display:flex;
+  flex-direction:column;
+}
+
+.book-cover{
+  aspect-ratio:2/3;
+  background:var(--ink-mid);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:1.5rem;
+  margin-bottom:1rem;
+  position:relative;
+  overflow:hidden;
+}
+
+.book-cover::before{
+  content:'';
+  position:absolute;
+  top:0;right:0;bottom:0;
+  width:8px;
+  background:rgba(201,168,76,0.25);
+}
+
+.book-cover-text{
+  font-family:'Playfair Display',serif;
+  font-size:1rem;
+  font-style:italic;
+  color:var(--gold-light);
+  text-align:center;
+  line-height:1.5;
+  opacity:0.7;
+}
+
+.book-title{
+  font-family:'Playfair Display',serif;
+  font-size:1rem;
+  color:var(--ink-mid);
+  margin-bottom:0.3rem;
+}
+
+.book-meta{
+  font-size:0.88rem;
+  color:var(--ink-soft);
+  font-style:italic;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand" onclick="showPage('home')">Utopian Studies</div>
+  <ul class="nav-links">
+    <li><a href="#" class="active" onclick="showPage('home');return false">Home</a></li>
+    <li><a href="#" onclick="showPage('course');return false">Course</a></li>
+    <li><a href="#" onclick="showPage('about');return false">Research</a></li>
+    <li><a href="#" onclick="showPage('books');return false">Books</a></li>
+    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScn_l0wPZAjRa-IPayFY8H25Uao0GucrSwA2NU-zNkFdD5TSw/viewform?usp=publish-editor" style="background:rgba(201,168,76,0.15);color:var(--gold)!important">Enroll →</a></li>
+  </ul>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+
+  <section class="hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-ornament"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Utopian Studies · Dr. Mmeskerem Lechisa</div>
+      <div class="hero-amharic">የዩቶፕያ እሳቤዎች በመጽሐፍ ቅዱስ</div>
+      <h1 class="hero-title"><em>Utopian Thoughts</em><br>in the Bible</h1>
+      <p class="hero-desc">An interdisciplinary course exploring utopian thought in Scripture and its connections to theology, history, education, and civilization — with special attention to the Ethiopian context.</p>
+      <p class="hero-author">Taught by Dr. Mmeskerem Lechisa</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" onclick="showPage('course');return false" href="#">View the Course</a>
+        <a class="btn-outline" href="https://docs.google.com/forms/d/e/1FAIpQLScn_l0wPZAjRa-IPayFY8H25Uao0GucrSwA2NU-zNkFdD5TSw/viewform?usp=publish-editor">Register / Enroll</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="gold-divider"></div>
+
+  <div class="section">
+    <div class="section-label">What you will learn</div>
+    <h2 class="section-title">Explore <em>utopian imagination</em><br>across history &amp; scripture</h2>
+
+    <div class="learn-grid">
+      <div class="learn-card">
+        <div class="learn-num">01</div>
+        <h3>Origins of Utopian Writing</h3>
+        <p>Trace the history of "blueprint societies" and ideal-world thinking from ancient texts through the Renaissance.</p>
+      </div>
+      <div class="learn-card">
+        <div class="learn-num">02</div>
+        <h3>Landmark Works</h3>
+        <p>Study Thomas More's <em>Utopia</em> (1516) and Campanella's <em>City of the Sun</em> (1603) alongside biblical visions.</p>
+      </div>
+      <div class="learn-card">
+        <div class="learn-num">03</div>
+        <h3>Identity &amp; Civilization</h3>
+        <p>Examine utopianism through the lens of Ethiopian history, culture, and the Habesha intellectual tradition.</p>
+      </div>
+      <div class="learn-card">
+        <div class="learn-num">04</div>
+        <h3>Modern Challenges</h3>
+        <p>Connect ancient ideals to contemporary cultural, political, and educational questions of our time.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="format-section">
+    <div class="section" style="padding-top:0;padding-bottom:0">
+      <div class="section-label">Course format</div>
+      <h2 class="section-title">How the course works</h2>
+      <div class="format-grid">
+        <div class="format-card">
+          <div class="format-icon">▶</div>
+          <h3>Video Lessons</h3>
+          <p>Each lesson is taught by video, presented consecutively in a clear sequence from introduction through advanced topics.</p>
+        </div>
+        <div class="format-card">
+          <div class="format-icon">📄</div>
+          <h3>Notes &amp; Resources</h3>
+          <p>Companion notes accompany every video, giving you reference material to study alongside each lesson.</p>
+        </div>
+        <div class="format-card">
+          <div class="format-icon">✎</div>
+          <h3>Quizzes</h3>
+          <p>Optional quizzes at the end of each lesson help reinforce your understanding — coming soon.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="register-section">
+    <h2>Begin your study</h2>
+    <p>Register to receive updates, access information, and join a growing community of students exploring utopian thought.</p>
+    <a class="btn-dark" href="https://docs.google.com/forms/d/e/1FAIpQLScn_l0wPZAjRa-IPayFY8H25Uao0GucrSwA2NU-zNkFdD5TSw/viewform?usp=publish-editor">Register / Enroll Now</a>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Utopian Studies</div>
+    <p>Video lessons and resources from Dr. Mmeskerem Lechisa<br>
+    An interdisciplinary course on utopian thought in the Bible</p>
+  </footer>
+
+</div>
+
+<!-- COURSE PAGE -->
+<div id="page-course" class="page">
+  <div style="background:var(--ink);padding:4rem 4rem 3rem">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="section-label" style="color:var(--gold)">Utopian Studies · Course Curriculum</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:400;color:var(--white);line-height:1.2">Course Lessons</h1>
+      <p style="color:rgba(240,233,216,0.55);font-size:1.05rem;margin-top:1rem;max-width:560px;line-height:1.7">Follow the lessons in order. Each includes a video and accompanying notes. Optional quizzes are coming soon.</p>
+    </div>
+  </div>
+  <div class="gold-divider"></div>
+
+  <div class="lessons-bg">
+    <div class="lessons-inner">
+      <div class="lessons-list">
+        <a class="lesson-row" href="https://www.moonlitesolutions.org/utopia/lessons/000-introduction">
+          <div class="lesson-num">00</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Introduction</div>
+            <div class="lesson-sub">Overview of the course &amp; methodology</div>
+          </div>
+          <div class="lesson-badge">Start here</div>
+          <div class="lesson-arrow">→</div>
+        </a>
+        <a class="lesson-row" href="https://www.moonlitesolutions.org/utopia/lessons/000-questions-and-concerns">
+          <div class="lesson-num">Q</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Questions &amp; Concerns</div>
+            <div class="lesson-sub">About the course — common questions answered</div>
+          </div>
+          <div class="lesson-arrow">→</div>
+        </a>
+        <a class="lesson-row" href="https://www.moonlitesolutions.org/utopia/lessons/001-lesson-1a">
+          <div class="lesson-num">1A</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Lesson 1A</div>
+            <div class="lesson-sub">Foundations of utopian thought</div>
+          </div>
+          <div class="lesson-arrow">→</div>
+        </a>
+        <a class="lesson-row" href="https://www.moonlitesolutions.org/utopia/lessons/002-lesson-1b">
+          <div class="lesson-num">1B</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Lesson 1B</div>
+            <div class="lesson-sub">Continuing the first unit</div>
+          </div>
+          <div class="lesson-arrow">→</div>
+        </a>
+        <a class="lesson-row" href="https://www.moonlitesolutions.org/utopia/lessons/003-lesson-1c">
+          <div class="lesson-num">1C</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Lesson 1C</div>
+            <div class="lesson-sub">Concluding the first unit</div>
+          </div>
+          <div class="lesson-arrow">→</div>
+        </a>
+        <a class="lesson-row" href="https://www.moonlitesolutions.org/utopia/lessons/004-lesson-2">
+          <div class="lesson-num">02</div>
+          <div class="lesson-info">
+            <div class="lesson-title">Lesson 2</div>
+            <div class="lesson-sub">Second unit of the course</div>
+          </div>
+          <div class="lesson-arrow">→</div>
+        </a>
+      </div>
+      <div style="margin-top:3rem;text-align:center">
+        <a class="btn-outline" href="https://docs.google.com/forms/d/e/1FAIpQLScn_l0wPZAjRa-IPayFY8H25Uao0GucrSwA2NU-zNkFdD5TSw/viewform?usp=publish-editor" style="display:inline-block">Register to receive updates →</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Utopian Studies</div>
+    <p>Video lessons and resources from Dr. Mmeskerem Lechisa</p>
+  </footer>
+</div>
+
+<!-- ABOUT / RESEARCH PAGE -->
+<div id="page-about" class="page">
+  <div class="section" style="padding-top:4rem">
+    <div class="section-label">Scholar &amp; Educator</div>
+    <h1 class="section-title">Research &amp; <em>Publications</em></h1>
+    <div class="about-layout" style="margin-top:3rem">
+      <div class="about-portrait">
+        <div class="portrait-initials">ML</div>
+        <div class="portrait-caption">Dr. Mmeskerem Lechisa</div>
+      </div>
+      <div class="about-body">
+        <h3>About the Scholar</h3>
+        <p>Dr. Mmeskerem Lechisa is an interdisciplinary scholar whose work spans theology, history, and education — with a particular focus on utopian thought and its manifestations in the Bible and Ethiopian intellectual history.</p>
+        <p>Her courses bring together classical utopian literature, biblical scholarship, and the rich cultural traditions of Ethiopia into a unified framework for understanding ideals of justice, community, and the good society.</p>
+        <h3>Selected Publications</h3>
+        <ul class="pub-list">
+          <li>
+            <div class="pub-title">Utopian Thought in the Ethiopian Biblical Tradition</div>
+            <div class="pub-meta">Research publication — available via course materials</div>
+          </li>
+          <li>
+            <div class="pub-title">Blueprint Societies: From Thomas More to the Habesha Imagination</div>
+            <div class="pub-meta">Interdisciplinary study in theology &amp; civilization</div>
+          </li>
+          <li>
+            <div class="pub-title">Education, Identity, and the Utopian Vision</div>
+            <div class="pub-meta">Essay on pedagogy and cultural utopianism</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-brand">Utopian Studies</div>
+    <p>Video lessons and resources from Dr. Mmeskerem Lechisa</p>
+  </footer>
+</div>
+
+<!-- BOOKS PAGE -->
+<div id="page-books" class="page">
+  <div class="section" style="padding-top:4rem">
+    <div class="section-label">Recommended Reading</div>
+    <h1 class="section-title">Books &amp; <em>Texts</em></h1>
+    <div class="books-grid">
+      <div class="book-card">
+        <div class="book-cover">
+          <div class="book-cover-text">Utopia<br><span style="font-size:0.85rem;opacity:0.6">Thomas More · 1516</span></div>
+        </div>
+        <div class="book-title">Utopia</div>
+        <div class="book-meta">Thomas More · 1516</div>
+      </div>
+      <div class="book-card">
+        <div class="book-cover">
+          <div class="book-cover-text">The City of the Sun<br><span style="font-size:0.85rem;opacity:0.6">Campanella · 1623</span></div>
+        </div>
+        <div class="book-title">The City of the Sun</div>
+        <div class="book-meta">Tommaso Campanella · 1623</div>
+      </div>
+      <div class="book-card">
+        <div class="book-cover">
+          <div class="book-cover-text">Course<br>Materials<br><span style="font-size:0.85rem;opacity:0.6">Dr. M. Lechisa</span></div>
+        </div>
+        <div class="book-title">Course Reader</div>
+        <div class="book-meta">Dr. Mmeskerem Lechisa · available on enrollment</div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-brand">Utopian Studies</div>
+    <p>Video lessons and resources from Dr. Mmeskerem Lechisa</p>
+  </footer>
+</div>
+
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  const idx={home:0,course:1,about:2,books:3};
+  if(idx[id]!==undefined) document.querySelectorAll('.nav-links a')[idx[id]].classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
