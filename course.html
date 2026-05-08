@@ -8,6 +8,37 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<style>
+.videos-section{background:var(--parchment);padding:4rem 0}
+.videos-inner{max-width:1100px;margin:0 auto;padding:0 4rem}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2rem;margin-top:2rem}
+.video-card{background:var(--white);border:1px solid var(--parchment-border);cursor:pointer;transition:transform 0.2s,box-shadow 0.2s}
+.video-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(26,22,18,0.1)}
+.video-thumb{position:relative;aspect-ratio:16/9;background:var(--ink);overflow:hidden}
+.video-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.video-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(26,22,18,0.3);opacity:0;transition:opacity 0.2s}
+.video-card:hover .video-play{opacity:1}
+.video-play-btn{width:52px;height:52px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--ink);padding-left:4px}
+.video-info{padding:1rem 1.2rem 1.4rem}
+.video-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:400;color:var(--ink-mid);line-height:1.4;margin-bottom:0.4rem}
+.video-date{font-size:0.82rem;color:var(--ink-soft);font-style:italic}
+.video-loading{text-align:center;padding:3rem;color:var(--ink-soft);font-style:italic;font-size:1.05rem}
+.video-error{text-align:center;padding:2rem;color:var(--ink-soft);font-size:0.95rem}
+.video-error a{color:var(--gold-dark);text-decoration:none}
+.video-error a:hover{text-decoration:underline}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,8,6,0.92);z-index:1000;align-items:center;justify-content:center;padding:2rem}
+.modal-overlay.open{display:flex}
+.modal-inner{width:100%;max-width:860px;position:relative}
+.modal-close{position:absolute;top:-2.5rem;right:0;background:none;border:none;color:rgba(240,233,216,0.6);font-size:1.5rem;cursor:pointer;padding:0.3rem 0.6rem;transition:color 0.2s}
+.modal-close:hover{color:var(--gold)}
+.modal-video{aspect-ratio:16/9;width:100%;background:#000}
+.modal-video iframe{width:100%;height:100%;border:none;display:block}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold-light);margin-top:1rem;font-weight:400;line-height:1.4}
+@media(max-width:900px){
+  .videos-inner{padding:0 1.5rem}
+  .video-grid{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 
@@ -27,14 +58,13 @@
   <div class="section">
     <div class="section-label" style="color:var(--gold)">Utopian Studies · Course Curriculum</div>
     <h1 class="page-hero-title">Course Lessons</h1>
-    <p class="page-hero-desc">Follow the lessons in order. Each includes a video and accompanying notes. Optional quizzes are coming soon.</p>
+    <p class="page-hero-desc">Videos load automatically from our YouTube channel. New lessons appear here as soon as they are published.</p>
   </div>
 </div>
 <div class="gold-divider"></div>
 
-<div class="lessons-bg">
+<div class="lessons-bg" style="padding:4rem 0">
   <div class="lessons-inner">
-
     <div class="what-youll-learn">
       <h2 class="section-title" style="color:var(--white);margin-bottom:1.5rem">What you'll learn</h2>
       <ul class="learn-bullets">
@@ -44,64 +74,41 @@
         <li>How utopian ideas relate to modern cultural, political, and educational challenges</li>
       </ul>
     </div>
+  </div>
+</div>
 
-    <div class="section-label" style="color:var(--gold);margin-top:3rem">Lessons in order</div>
-
-    <div class="lessons-list">
-      <a class="lesson-row" href="lessons/000-introduction.html">
-        <div class="lesson-num">00</div>
-        <div class="lesson-info">
-          <div class="lesson-title">Introduction</div>
-          <div class="lesson-sub">Overview of the course &amp; methodology</div>
-        </div>
-        <div class="lesson-badge">Start here</div>
-        <div class="lesson-arrow">→</div>
-      </a>
-      <a class="lesson-row" href="lessons/000-questions-and-concerns.html">
-        <div class="lesson-num">Q</div>
-        <div class="lesson-info">
-          <div class="lesson-title">Questions &amp; Concerns</div>
-          <div class="lesson-sub">About the course — common questions answered</div>
-        </div>
-        <div class="lesson-arrow">→</div>
-      </a>
-      <a class="lesson-row" href="lessons/001-lesson-1a.html">
-        <div class="lesson-num">1A</div>
-        <div class="lesson-info">
-          <div class="lesson-title">Lesson 1A</div>
-          <div class="lesson-sub">Foundations of utopian thought</div>
-        </div>
-        <div class="lesson-arrow">→</div>
-      </a>
-      <a class="lesson-row" href="lessons/002-lesson-1b.html">
-        <div class="lesson-num">1B</div>
-        <div class="lesson-info">
-          <div class="lesson-title">Lesson 1B</div>
-          <div class="lesson-sub">Continuing the first unit</div>
-        </div>
-        <div class="lesson-arrow">→</div>
-      </a>
-      <a class="lesson-row" href="lessons/003-lesson-1c.html">
-        <div class="lesson-num">1C</div>
-        <div class="lesson-info">
-          <div class="lesson-title">Lesson 1C</div>
-          <div class="lesson-sub">Concluding the first unit</div>
-        </div>
-        <div class="lesson-arrow">→</div>
-      </a>
-      <a class="lesson-row" href="lessons/004-lesson-2.html">
-        <div class="lesson-num">02</div>
-        <div class="lesson-info">
-          <div class="lesson-title">Lesson 2</div>
-          <div class="lesson-sub">Second unit of the course</div>
-        </div>
-        <div class="lesson-arrow">→</div>
+<div class="videos-section">
+  <div class="videos-inner">
+    <div class="section-label">Latest from the channel</div>
+    <h2 class="section-title">All <em>Lessons</em></h2>
+    <div class="video-grid" id="video-grid">
+      <div class="video-loading" style="grid-column:1/-1">Loading videos…</div>
+    </div>
+    <div style="margin-top:2.5rem;text-align:center">
+      <a class="btn-outline" href="https://www.youtube.com/channel/UCU0HSw0Vh1EhM1_XMR0sj8A" target="_blank" rel="noopener"
+         style="border-color:rgba(138,110,47,0.5);color:var(--ink-soft)">
+        View all on YouTube →
       </a>
     </div>
+  </div>
+</div>
 
-    <div style="margin-top:3rem;text-align:center">
-      <a class="btn-outline" href="enroll.html">Register to receive updates →</a>
+<!-- Video Modal -->
+<div class="modal-overlay" id="modal" role="dialog" aria-modal="true">
+  <div class="modal-inner">
+    <button class="modal-close" id="modal-close" aria-label="Close video">✕</button>
+    <div class="modal-video">
+      <iframe id="modal-iframe" src="" allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+      </iframe>
     </div>
+    <div class="modal-title" id="modal-title"></div>
+  </div>
+</div>
+
+<div style="background:var(--parchment-dark);border-top:1px solid var(--parchment-border)">
+  <div style="max-width:1100px;margin:0 auto;padding:3rem 4rem;text-align:center">
+    <a class="btn-dark" href="enroll.html">Register / Enroll to receive updates →</a>
   </div>
 </div>
 
@@ -111,5 +118,93 @@
 </footer>
 
 <script src="js/nav.js"></script>
+<script>
+(function(){
+  var CHANNEL_ID = 'UCU0HSw0Vh1EhM1_XMR0sj8A';
+  var grid = document.getElementById('video-grid');
+  var modal = document.getElementById('modal');
+  var modalIframe = document.getElementById('modal-iframe');
+  var modalTitle = document.getElementById('modal-title');
+  var modalClose = document.getElementById('modal-close');
+
+  var rssUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL_ID;
+  var proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(rssUrl);
+
+  fetch(proxyUrl)
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var parser = new DOMParser();
+      var xml = parser.parseFromString(data.contents, 'text/xml');
+      var entries = xml.querySelectorAll('entry');
+
+      if(!entries.length){ showError(); return; }
+
+      grid.innerHTML = '';
+      entries.forEach(function(entry){
+        var videoId = '';
+        var vidIdEl = entry.getElementsByTagNameNS('http://www.youtube.com/xml/schemas/2015','videoId')[0];
+        if(vidIdEl){ videoId = vidIdEl.textContent; }
+        else {
+          var link = entry.querySelector('link');
+          if(link){ videoId = (link.getAttribute('href')||'').replace('https://www.youtube.com/watch?v=',''); }
+        }
+        if(!videoId) return;
+
+        var title = entry.querySelector('title') ? entry.querySelector('title').textContent : 'Untitled';
+        var published = entry.querySelector('published') ? entry.querySelector('published').textContent : '';
+        var thumb = 'https://img.youtube.com/vi/' + videoId + '/mqdefault.jpg';
+        var dateStr = published ? new Date(published).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : '';
+
+        var card = document.createElement('div');
+        card.className = 'video-card';
+        card.setAttribute('role','button');
+        card.setAttribute('tabindex','0');
+        card.innerHTML =
+          '<div class="video-thumb">' +
+            '<img src="' + thumb + '" alt="' + esc(title) + '" loading="lazy">' +
+            '<div class="video-play"><div class="video-play-btn">&#9654;</div></div>' +
+          '</div>' +
+          '<div class="video-info">' +
+            '<div class="video-title">' + esc(title) + '</div>' +
+            (dateStr ? '<div class="video-date">' + dateStr + '</div>' : '') +
+          '</div>';
+
+        function openVideo(){
+          modalIframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1';
+          modalTitle.textContent = title;
+          modal.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+
+        card.addEventListener('click', openVideo);
+        card.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' ') openVideo(); });
+        grid.appendChild(card);
+      });
+    })
+    .catch(function(){ showError(); });
+
+  function showError(){
+    grid.innerHTML =
+      '<div class="video-error" style="grid-column:1/-1">' +
+        '<p>Could not load videos automatically.</p>' +
+        '<p style="margin-top:0.5rem"><a href="https://www.youtube.com/channel/UCU0HSw0Vh1EhM1_XMR0sj8A" target="_blank">Watch directly on YouTube →</a></p>' +
+      '</div>';
+  }
+
+  function esc(s){
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+
+  function closeModal(){
+    modal.classList.remove('open');
+    modalIframe.src = '';
+    document.body.style.overflow = '';
+  }
+})();
+</script>
 </body>
 </html>
