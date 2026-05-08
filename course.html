@@ -11,51 +11,47 @@
 <style>
 .videos-section{background:var(--parchment);padding:4rem 0}
 .videos-inner{max-width:1100px;margin:0 auto;padding:0 4rem}
-.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2rem;margin-top:2rem}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2rem;margin-top:2rem}
 .video-card{background:var(--white);border:1px solid var(--parchment-border);cursor:pointer;transition:transform 0.2s,box-shadow 0.2s}
-.video-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(26,22,18,0.1)}
+.video-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(26,22,18,0.12)}
 .video-thumb{position:relative;aspect-ratio:16/9;background:var(--ink);overflow:hidden}
 .video-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.video-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(26,22,18,0.3);opacity:0;transition:opacity 0.2s}
+.video-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(26,22,18,0.35);opacity:0;transition:opacity 0.2s}
 .video-card:hover .video-play{opacity:1}
-.video-play-btn{width:52px;height:52px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--ink);padding-left:4px}
-.video-info{padding:1rem 1.2rem 1.4rem}
-.video-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:400;color:var(--ink-mid);line-height:1.4;margin-bottom:0.4rem}
-.video-date{font-size:0.82rem;color:var(--ink-soft);font-style:italic}
-.video-loading{text-align:center;padding:3rem;color:var(--ink-soft);font-style:italic;font-size:1.05rem;grid-column:1/-1}
-.video-error{text-align:center;padding:2rem;color:var(--ink-soft);font-size:0.95rem;grid-column:1/-1}
-.video-error a{color:var(--gold-dark);text-decoration:none}
-.video-error a:hover{text-decoration:underline}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,8,6,0.92);z-index:1000;align-items:center;justify-content:center;padding:2rem}
+.video-play-btn{width:54px;height:54px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:var(--ink);padding-left:5px}
+.video-info{padding:1rem 1.2rem 1.4rem;display:flex;align-items:flex-start;gap:1rem}
+.video-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:400;color:var(--parchment-border);line-height:1;flex-shrink:0;min-width:2.5rem}
+.video-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:400;color:var(--ink-mid);line-height:1.4;padding-top:0.3rem}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,8,6,0.93);z-index:1000;align-items:center;justify-content:center;padding:2rem}
 .modal-overlay.open{display:flex}
-.modal-inner{width:100%;max-width:860px;position:relative}
-.modal-close{position:absolute;top:-2.5rem;right:0;background:none;border:none;color:rgba(240,233,216,0.6);font-size:1.5rem;cursor:pointer;padding:0.3rem 0.6rem;transition:color 0.2s}
+.modal-inner{width:100%;max-width:900px;position:relative}
+.modal-close{position:absolute;top:-2.8rem;right:0;background:none;border:none;color:rgba(240,233,216,0.5);font-size:1.6rem;cursor:pointer;padding:0.3rem 0.6rem;line-height:1;transition:color 0.2s}
 .modal-close:hover{color:var(--gold)}
 .modal-video{aspect-ratio:16/9;width:100%;background:#000}
 .modal-video iframe{width:100%;height:100%;border:none;display:block}
-.modal-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold-light);margin-top:1rem;font-weight:400;line-height:1.4}
-@media(max-width:900px){.videos-inner{padding:0 1.5rem}.video-grid{grid-template-columns:1fr}}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold-light);margin-top:1rem;font-weight:400;line-height:1.4;opacity:0.85}
+@media(max-width:900px){.videos-inner{padding:0 1.5rem}.video-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}}
+@media(max-width:540px){.video-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
 <nav>
   <a class="nav-brand" href="index.html">Utopian Studies</a>
-  <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+  <button class="nav-toggle" aria-label="Toggle menu">&#9776;</button>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="course.html" class="active">Course</a></li>
     <li><a href="about.html">Research</a></li>
     <li><a href="books.html">Books</a></li>
-    <li><a href="enroll.html" class="nav-enroll">Enroll →</a></li>
+    <li><a href="enroll.html" class="nav-enroll">Enroll &rarr;</a></li>
   </ul>
 </nav>
 
 <div class="page-hero-dark">
   <div class="section">
-    <div class="section-label" style="color:var(--gold)">Utopian Studies · Course Curriculum</div>
+    <div class="section-label" style="color:var(--gold)">Utopian Studies &middot; Course Curriculum</div>
     <h1 class="page-hero-title">Course Lessons</h1>
-    <p class="page-hero-desc">Videos load automatically from our YouTube channel. New lessons appear here as soon as they are published.</p>
+    <p class="page-hero-desc">Watch each lesson in order. Click any video to play it directly on this page.</p>
   </div>
 </div>
 <div class="gold-divider"></div>
@@ -63,11 +59,11 @@
 <div class="lessons-bg" style="padding:4rem 0">
   <div class="lessons-inner">
     <div class="what-youll-learn">
-      <h2 class="section-title" style="color:var(--white);margin-bottom:1.5rem">What you'll learn</h2>
+      <h2 class="section-title" style="color:var(--white);margin-bottom:1.5rem">What you&#39;ll learn</h2>
       <ul class="learn-bullets">
-        <li>The origins and history of utopian writing and "blueprint" societies</li>
+        <li>The origins and history of utopian writing and &ldquo;blueprint&rdquo; societies</li>
         <li>Major works such as <em>Utopia</em> (1516) and <em>City of the Sun</em> (1603)</li>
-        <li>Utopianism, identity, and civilization — especially in the Ethiopian historical context</li>
+        <li>Utopianism, identity, and civilization &mdash; especially in the Ethiopian historical context</li>
         <li>How utopian ideas relate to modern cultural, political, and educational challenges</li>
       </ul>
     </div>
@@ -76,15 +72,134 @@
 
 <div class="videos-section">
   <div class="videos-inner">
-    <div class="section-label">Latest from the channel</div>
+    <div class="section-label">12 lessons &middot; watch in order</div>
     <h2 class="section-title">All <em>Lessons</em></h2>
-    <div class="video-grid" id="video-grid">
-      <div class="video-loading">Loading videos…</div>
+    <div class="video-grid">
+      <div class="video-card" onclick="openVideo('P5Nzrb090V8','Introduction')">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/P5Nzrb090V8/mqdefault.jpg" alt="Introduction" loading="lazy">
+          <div class="video-play"><div class="video-play-btn">&#9654;</div></div>
+        </div>
+        <div class="video-info">
+          <div class="video-num">00</div>
+          <div class="video-title">Introduction</div>
+        </div>
+      </div>
+      <div class="video-card" onclick="openVideo('4nxNKcN9nO4','Questions and Answers')">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/4nxNKcN9nO4/mqdefault.jpg" alt="Questions and Answers" loading="lazy">
+          <div class="video-play"><div class="video-play-btn">&#9654;</div></div>
+        </div>
+        <div class="video-info">
+          <div class="video-num">Q</div>
+          <div class="video-title">Questions &amp; Answers</div>
+        </div>
+      </div>
+      <div class="video-card" onclick="openVideo('BnGG-4rpj6A','Lesson 1A')">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/BnGG-4rpj6A/mqdefault.jpg" alt="Lesson 1A" loading="lazy">
+          <div class="video-play"><div class="video-play-btn">&#9654;</div></div>
+        </div>
+        <div class="video-info">
+          <div class="video-num">1A</div>
+          <div class="video-title">Lesson 1A</div>
+        </div>
+      </div>
+      <div class="video-card" onclick="openVideo('tdwHnMRF7zA','Lesson 1B')">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/tdwHnMRF7zA/mqdefault.jpg" alt="Lesson 1B" loading="lazy">
+          <div class="video-play"><div class="video-play-btn">&#9654;</div></div>
+        </div>
+        <div class="video-info">
+          <div class="video-num">1B</div>
+          <div class="video-title">Lesson 1B</div>
+        </div>
+      </div>
+      <div class="video-card" onclick="openVideo('7Eeuf8ZmhSU','Lesson 1C')">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/7Eeuf8ZmhSU/mqdefault.jpg" alt="Lesson 1C" loading="lazy">
+          <div class="video-play"><div class="video-play-btn">&#9654;</div></div>
+        </div>
+        <div class="video-info">
+          <div class="video-num">1C</div>
+          <div class="video-title">Lesson 1C</div>
+        </div>
+      </div>
+      <div class="video-card" onclick="openVideo('6qbU6nrVIA4','Lesson 2')">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/6qbU6nrVIA4/mqdefault.jpg" alt="Lesson 2" loading="lazy">
+          <div class="video-play"><div class="video-play-btn">&#9654;</div></div>
+        </div>
+        <div class="video-info">
+          <div class="video-num">02</div>
+          <div class="video-title">Lesson 2</div>
+        </div>
+      </div>
+      <div class="video-card" onclick="openVideo('m9d4A-0UIFE','Lesson 3')">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/m9d4A-0UIFE/mqdefault.jpg" alt="Lesson 3" loading="lazy">
+          <div class="video-play"><div class="video-play-btn">&#9654;</div></div>
+        </div>
+        <div class="video-info">
+          <div class="video-num">03</div>
+          <div class="video-title">Lesson 3</div>
+        </div>
+      </div>
+      <div class="video-card" onclick="openVideo('eJfHhuapKiw','Lesson 4')">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/eJfHhuapKiw/mqdefault.jpg" alt="Lesson 4" loading="lazy">
+          <div class="video-play"><div class="video-play-btn">&#9654;</div></div>
+        </div>
+        <div class="video-info">
+          <div class="video-num">04</div>
+          <div class="video-title">Lesson 4</div>
+        </div>
+      </div>
+      <div class="video-card" onclick="openVideo('MBAtVCsLe5I','Lesson 5')">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/MBAtVCsLe5I/mqdefault.jpg" alt="Lesson 5" loading="lazy">
+          <div class="video-play"><div class="video-play-btn">&#9654;</div></div>
+        </div>
+        <div class="video-info">
+          <div class="video-num">05</div>
+          <div class="video-title">Lesson 5</div>
+        </div>
+      </div>
+      <div class="video-card" onclick="openVideo('PmvrsqS6RqQ','Lesson 6')">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/PmvrsqS6RqQ/mqdefault.jpg" alt="Lesson 6" loading="lazy">
+          <div class="video-play"><div class="video-play-btn">&#9654;</div></div>
+        </div>
+        <div class="video-info">
+          <div class="video-num">06</div>
+          <div class="video-title">Lesson 6</div>
+        </div>
+      </div>
+      <div class="video-card" onclick="openVideo('YiEJMNKkRFU','Lesson 7')">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/YiEJMNKkRFU/mqdefault.jpg" alt="Lesson 7" loading="lazy">
+          <div class="video-play"><div class="video-play-btn">&#9654;</div></div>
+        </div>
+        <div class="video-info">
+          <div class="video-num">07</div>
+          <div class="video-title">Lesson 7</div>
+        </div>
+      </div>
+      <div class="video-card" onclick="openVideo('nnl5vXu4HHg','Lesson 8')">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/nnl5vXu4HHg/mqdefault.jpg" alt="Lesson 8" loading="lazy">
+          <div class="video-play"><div class="video-play-btn">&#9654;</div></div>
+        </div>
+        <div class="video-info">
+          <div class="video-num">08</div>
+          <div class="video-title">Lesson 8</div>
+        </div>
+      </div>
     </div>
     <div style="margin-top:2.5rem;text-align:center">
       <a class="btn-outline" href="https://www.youtube.com/channel/UCU0HSw0Vh1EhM1_XMR0sj8A" target="_blank" rel="noopener"
          style="border-color:rgba(138,110,47,0.5);color:var(--ink-soft)">
-        View all on YouTube →
+        View channel on YouTube &rarr;
       </a>
     </div>
   </div>
@@ -92,7 +207,7 @@
 
 <div class="modal-overlay" id="modal" role="dialog" aria-modal="true">
   <div class="modal-inner">
-    <button class="modal-close" id="modal-close" aria-label="Close video">✕</button>
+    <button class="modal-close" id="modal-close" aria-label="Close video">&times;</button>
     <div class="modal-video">
       <iframe id="modal-iframe" src="" allowfullscreen
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
@@ -104,7 +219,7 @@
 
 <div style="background:var(--parchment-dark);border-top:1px solid var(--parchment-border)">
   <div style="max-width:1100px;margin:0 auto;padding:3rem 4rem;text-align:center">
-    <a class="btn-dark" href="enroll.html">Register / Enroll to receive updates →</a>
+    <a class="btn-dark" href="enroll.html">Register / Enroll to receive updates &rarr;</a>
   </div>
 </div>
 
@@ -115,114 +230,26 @@
 
 <script src="js/nav.js"></script>
 <script>
-(function(){
-  var CHANNEL_ID = 'UCU0HSw0Vh1EhM1_XMR0sj8A';
-  var grid = document.getElementById('video-grid');
-  var modal = document.getElementById('modal');
-  var modalIframe = document.getElementById('modal-iframe');
-  var modalTitle = document.getElementById('modal-title');
-  var modalClose = document.getElementById('modal-close');
+var modal = document.getElementById('modal');
+var modalIframe = document.getElementById('modal-iframe');
+var modalTitle = document.getElementById('modal-title');
 
-  var rssUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL_ID;
+function openVideo(id, title) {
+  modalIframe.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1';
+  modalTitle.textContent = title;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
 
-  // Try multiple proxies in order until one works
-  var proxies = [
-    'https://corsproxy.io/?' + encodeURIComponent(rssUrl),
-    'https://api.allorigins.win/get?url=' + encodeURIComponent(rssUrl),
-    'https://cors-anywhere.herokuapp.com/' + rssUrl
-  ];
+function closeModal() {
+  modal.classList.remove('open');
+  modalIframe.src = '';
+  document.body.style.overflow = '';
+}
 
-  function tryProxy(index) {
-    if (index >= proxies.length) { showError(); return; }
-    var url = proxies[index];
-    fetch(url)
-      .then(function(r) { return r.text(); })
-      .then(function(text) {
-        // allorigins wraps in JSON
-        var xmlText = text;
-        try {
-          var json = JSON.parse(text);
-          if (json.contents) xmlText = json.contents;
-        } catch(e) {}
-
-        var parser = new DOMParser();
-        var xml = parser.parseFromString(xmlText, 'text/xml');
-        var entries = xml.querySelectorAll('entry');
-        if (!entries.length) { tryProxy(index + 1); return; }
-        renderVideos(entries);
-      })
-      .catch(function() { tryProxy(index + 1); });
-  }
-
-  function renderVideos(entries) {
-    grid.innerHTML = '';
-    entries.forEach(function(entry) {
-      var videoId = '';
-      var allEls = entry.getElementsByTagName('*');
-      for (var i = 0; i < allEls.length; i++) {
-        if (allEls[i].localName === 'videoId') { videoId = allEls[i].textContent; break; }
-      }
-      if (!videoId) {
-        var link = entry.querySelector('link');
-        if (link) videoId = (link.getAttribute('href') || '').split('v=')[1] || '';
-      }
-      if (!videoId) return;
-
-      var title = entry.querySelector('title') ? entry.querySelector('title').textContent : 'Untitled';
-      var published = entry.querySelector('published') ? entry.querySelector('published').textContent : '';
-      var thumb = 'https://img.youtube.com/vi/' + videoId + '/mqdefault.jpg';
-      var dateStr = published ? new Date(published).toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'}) : '';
-
-      var card = document.createElement('div');
-      card.className = 'video-card';
-      card.setAttribute('role', 'button');
-      card.setAttribute('tabindex', '0');
-      card.innerHTML =
-        '<div class="video-thumb">' +
-          '<img src="' + thumb + '" alt="' + esc(title) + '" loading="lazy">' +
-          '<div class="video-play"><div class="video-play-btn">&#9654;</div></div>' +
-        '</div>' +
-        '<div class="video-info">' +
-          '<div class="video-title">' + esc(title) + '</div>' +
-          (dateStr ? '<div class="video-date">' + dateStr + '</div>' : '') +
-        '</div>';
-
-      function openVideo() {
-        modalIframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1';
-        modalTitle.textContent = title;
-        modal.classList.add('open');
-        document.body.style.overflow = 'hidden';
-      }
-      card.addEventListener('click', openVideo);
-      card.addEventListener('keydown', function(e) { if (e.key==='Enter'||e.key===' ') openVideo(); });
-      grid.appendChild(card);
-    });
-  }
-
-  function showError() {
-    grid.innerHTML =
-      '<div class="video-error">' +
-        '<p>Videos could not load automatically right now.</p>' +
-        '<p style="margin-top:0.8rem"><a href="https://www.youtube.com/channel/UCU0HSw0Vh1EhM1_XMR0sj8A" target="_blank" rel="noopener">Watch all lessons on YouTube →</a></p>' +
-      '</div>';
-  }
-
-  function esc(s) {
-    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  modalClose.addEventListener('click', closeModal);
-  modal.addEventListener('click', function(e) { if (e.target===modal) closeModal(); });
-  document.addEventListener('keydown', function(e) { if (e.key==='Escape') closeModal(); });
-
-  function closeModal() {
-    modal.classList.remove('open');
-    modalIframe.src = '';
-    document.body.style.overflow = '';
-  }
-
-  tryProxy(0);
-})();
+document.getElementById('modal-close').addEventListener('click', closeModal);
+modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 </script>
 </body>
 </html>
