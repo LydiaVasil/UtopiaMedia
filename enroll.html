@@ -8,37 +8,252 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<style>
+.enroll-hero{background:var(--ink);padding:4rem 0 3rem;text-align:center}
+.enroll-hero-eyebrow{font-size:0.75rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;justify-content:center;gap:1rem}
+.enroll-hero-eyebrow::before,.enroll-hero-eyebrow::after{content:'';display:inline-block;width:40px;height:1px;background:var(--gold)}
+.enroll-hero h1{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:400;color:var(--white);margin-bottom:0.8rem}
+.enroll-hero h1 em{font-style:italic;color:var(--gold-light)}
+.enroll-hero p{color:rgba(240,233,216,0.55);font-size:1.05rem;max-width:500px;margin:0 auto;line-height:1.7}
+
+.form-section{background:var(--parchment);padding:5rem 0}
+.form-wrap{max-width:720px;margin:0 auto;padding:0 2rem}
+
+.form-card{background:var(--white);border:1px solid var(--parchment-border);padding:3rem 3.5rem}
+
+.form-group{margin-bottom:1.8rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.8rem}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-bottom:1.8rem}
+
+label{display:block;font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:0.5rem}
+label .req{color:var(--gold-dark);margin-left:2px}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select{
+  width:100%;
+  padding:0.85rem 1rem;
+  font-family:'Crimson Pro',serif;
+  font-size:1rem;
+  color:var(--ink);
+  background:var(--parchment);
+  border:1px solid var(--parchment-border);
+  border-radius:0;
+  outline:none;
+  transition:border-color 0.2s,background 0.2s;
+  appearance:none;
+  -webkit-appearance:none;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+select:focus{
+  border-color:var(--gold);
+  background:var(--white);
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="tel"]::placeholder{
+  color:var(--parchment-border);
+}
+
+.select-wrap{position:relative}
+.select-wrap::after{
+  content:'▾';
+  position:absolute;
+  right:1rem;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--gold-dark);
+  pointer-events:none;
+  font-size:0.9rem;
+}
+
+.gender-group{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.gender-option{position:relative}
+.gender-option input[type="radio"]{position:absolute;opacity:0;width:0;height:0}
+.gender-label{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.6rem;
+  padding:0.85rem 1rem;
+  border:1px solid var(--parchment-border);
+  background:var(--parchment);
+  cursor:pointer;
+  font-family:'Crimson Pro',serif;
+  font-size:1rem;
+  color:var(--ink-soft);
+  transition:all 0.2s;
+  user-select:none;
+}
+.gender-label:hover{border-color:var(--gold);color:var(--ink-mid)}
+.gender-option input[type="radio"]:checked + .gender-label{
+  border-color:var(--gold);
+  background:var(--gold);
+  color:var(--ink);
+  font-weight:500;
+}
+
+.form-divider{border:none;border-top:1px solid var(--parchment-border);margin:2.5rem 0}
+
+.submit-btn{
+  width:100%;
+  background:var(--ink);
+  color:var(--gold-light);
+  border:none;
+  padding:1.1rem 2rem;
+  font-family:'Crimson Pro',serif;
+  font-size:1rem;
+  font-weight:500;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:background 0.2s,transform 0.15s;
+  margin-top:0.5rem;
+}
+.submit-btn:hover{background:var(--ink-mid);transform:translateY(-1px)}
+.submit-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+
+.form-note{font-size:0.88rem;color:var(--ink-soft);text-align:center;margin-top:1.2rem;font-style:italic;line-height:1.6}
+.required-note{font-size:0.82rem;color:var(--ink-soft);margin-bottom:2rem}
+.required-note span{color:var(--gold-dark)}
+
+/* Success state */
+.success-msg{
+  display:none;
+  text-align:center;
+  padding:3rem 2rem;
+}
+.success-msg.show{display:block}
+.success-icon{font-size:3rem;margin-bottom:1rem;color:var(--gold)}
+.success-msg h2{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:400;color:var(--ink);margin-bottom:0.8rem}
+.success-msg p{color:var(--ink-soft);font-size:1.05rem;line-height:1.7}
+
+/* Error msg */
+.field-error{font-size:0.82rem;color:#c0392b;margin-top:0.4rem;display:none}
+.field-error.show{display:block}
+input.invalid,select.invalid{border-color:#c0392b}
+
+@media(max-width:700px){
+  .form-card{padding:2rem 1.5rem}
+  .form-row,.form-row-3{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 
 <nav>
   <a class="nav-brand" href="index.html">Utopian Studies</a>
-  <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+  <button class="nav-toggle" aria-label="Toggle menu">&#9776;</button>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="course.html">Course</a></li>
     <li><a href="about.html">Research</a></li>
     <li><a href="books.html">Books</a></li>
-    <li><a href="enroll.html" class="nav-enroll active">Enroll →</a></li>
+    <li><a href="enroll.html" class="nav-enroll active">Enroll &rarr;</a></li>
   </ul>
 </nav>
 
-<div class="register-section" style="min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center">
-  <div class="hero-eyebrow" style="color:var(--ink-mid);justify-content:center;margin-bottom:1.5rem">
-    <span style="display:inline-block;width:40px;height:1px;background:var(--gold-dark)"></span>
-    Registration
-    <span style="display:inline-block;width:40px;height:1px;background:var(--gold-dark)"></span>
+<div class="enroll-hero">
+  <div class="section" style="padding-top:0;padding-bottom:0">
+    <div class="enroll-hero-eyebrow">Registration</div>
+    <h1>Register &amp; <em>Enroll</em></h1>
+    <p>Join a growing community of students exploring utopian thought in the Bible with Dr. Mmeskerem Lechisa.</p>
   </div>
-  <h1 style="font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:400;color:var(--ink);margin-bottom:1rem;text-align:center">Register &amp; Enroll</h1>
-  <p style="font-size:1.1rem;color:var(--ink-mid);max-width:480px;text-align:center;line-height:1.7;margin-bottom:2.5rem">
-    Complete the registration form to enroll in the course, receive updates, and gain access to all lesson materials.
-  </p>
-  <a class="btn-dark" href="https://docs.google.com/forms/d/e/1FAIpQLScn_l0wPZAjRa-IPayFY8H25Uao0GucrSwA2NU-zNkFdD5TSw/viewform?usp=publish-editor" target="_blank" rel="noopener">
-    Open Registration Form →
-  </a>
-  <p style="margin-top:1.5rem;font-size:0.9rem;color:var(--ink-soft);font-style:italic">
-    You will be redirected to a Google Form
-  </p>
+</div>
+<div class="gold-divider"></div>
+
+<div class="form-section">
+  <div class="form-wrap">
+    <div class="form-card">
+
+      <!-- Success message (shown after submit) -->
+      <div class="success-msg" id="success-msg">
+        <div class="success-icon">&#10003;</div>
+        <h2>You are enrolled!</h2>
+        <p>Thank you for registering. You are now part of the Utopian Studies community.<br>
+        Check your email for confirmation and course access details.</p>
+      </div>
+
+      <!-- The form -->
+      <div id="form-body">
+        <div class="required-note"><span>*</span> Required fields</div>
+
+        <!-- Name row -->
+        <div class="form-row-3">
+          <div>
+            <label for="first_name">First Name <span class="req">*</span></label>
+            <input type="text" id="first_name" name="first_name" placeholder="Abebe" required autocomplete="given-name">
+            <div class="field-error" id="err-first">Please enter your first name</div>
+          </div>
+          <div>
+            <label for="middle_name">Middle Name</label>
+            <input type="text" id="middle_name" name="middle_name" placeholder="Girma" autocomplete="additional-name">
+          </div>
+          <div>
+            <label for="last_name">Last Name <span class="req">*</span></label>
+            <input type="text" id="last_name" name="last_name" placeholder="Kebede" required autocomplete="family-name">
+            <div class="field-error" id="err-last">Please enter your last name</div>
+          </div>
+        </div>
+
+        <!-- Gender -->
+        <div class="form-group">
+          <label>Gender</label>
+          <div class="gender-group">
+            <div class="gender-option">
+              <input type="radio" name="gender" id="gender-male" value="Male">
+              <label class="gender-label" for="gender-male">&#9794; Male</label>
+            </div>
+            <div class="gender-option">
+              <input type="radio" name="gender" id="gender-female" value="Female">
+              <label class="gender-label" for="gender-female">&#9792; Female</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Country / City -->
+        <div class="form-row">
+          <div>
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" placeholder="Ethiopia" autocomplete="country-name">
+          </div>
+          <div>
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" placeholder="Addis Ababa" autocomplete="address-level2">
+          </div>
+        </div>
+
+        <hr class="form-divider">
+
+        <!-- Contact -->
+        <div class="form-row">
+          <div>
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="+251 91 234 5678" autocomplete="tel">
+          </div>
+          <div>
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="abebe@email.com" autocomplete="email">
+          </div>
+        </div>
+
+        <button class="submit-btn" id="submit-btn" type="button" onclick="submitForm()">
+          Complete Registration &rarr;
+        </button>
+
+        <p class="form-note">
+          Your information is private and will only be used to manage course enrollment.<br>
+          No spam &mdash; ever.
+        </p>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <footer>
@@ -47,5 +262,83 @@
 </footer>
 
 <script src="js/nav.js"></script>
+<script>
+// -------------------------------------------------------
+// REPLACE THIS URL with your Google Apps Script Web App URL
+// (see README for setup instructions)
+// -------------------------------------------------------
+var SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+
+function submitForm() {
+  var btn = document.getElementById('submit-btn');
+  var valid = true;
+
+  // Validate required fields
+  var firstName = document.getElementById('first_name').value.trim();
+  var lastName = document.getElementById('last_name').value.trim();
+
+  if (!firstName) {
+    document.getElementById('first_name').classList.add('invalid');
+    document.getElementById('err-first').classList.add('show');
+    valid = false;
+  } else {
+    document.getElementById('first_name').classList.remove('invalid');
+    document.getElementById('err-first').classList.remove('show');
+  }
+
+  if (!lastName) {
+    document.getElementById('last_name').classList.add('invalid');
+    document.getElementById('err-last').classList.add('show');
+    valid = false;
+  } else {
+    document.getElementById('last_name').classList.remove('invalid');
+    document.getElementById('err-last').classList.remove('show');
+  }
+
+  if (!valid) return;
+
+  // Gather data
+  var gender = document.querySelector('input[name="gender"]:checked');
+  var data = {
+    first_name:   firstName,
+    middle_name:  document.getElementById('middle_name').value.trim(),
+    last_name:    lastName,
+    gender:       gender ? gender.value : '',
+    country:      document.getElementById('country').value.trim(),
+    city:         document.getElementById('city').value.trim(),
+    phone:        document.getElementById('phone').value.trim(),
+    email:        document.getElementById('email').value.trim(),
+    submitted_at: new Date().toISOString()
+  };
+
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  })
+  .then(function() {
+    document.getElementById('form-body').style.display = 'none';
+    document.getElementById('success-msg').classList.add('show');
+    window.scrollTo(0, 0);
+  })
+  .catch(function() {
+    btn.disabled = false;
+    btn.textContent = 'Complete Registration →';
+    alert('Something went wrong. Please try again or contact us directly.');
+  });
+}
+
+// Clear validation on input
+['first_name','last_name'].forEach(function(id) {
+  document.getElementById(id).addEventListener('input', function() {
+    this.classList.remove('invalid');
+    document.getElementById('err-' + id.split('_')[0]).classList.remove('show');
+  });
+});
+</script>
 </body>
 </html>
